@@ -1,0 +1,17 @@
+.element__like-icon {
+    width: 22px;
+    height: 19px;
+    margin-top: 30px;
+    margin-right: 20px;
+
+}
+
+
+.element__like-icon:active {
+    background-color: #000;
+}
+
+
+.element__like-icon:hover {
+    opacity: 0.5;
+}
