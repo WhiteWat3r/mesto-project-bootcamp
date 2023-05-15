@@ -11,7 +11,7 @@
 
 **GitHub Pages**
 
-* [Ссылка на сайт (GitHub Pages)](https://whitewat3r.github.io/russian-travel-bootcamp/)
+* [Ссылка на сайт (GitHub Pages)](https://whitewat3r.github.io/mesto-project-bootcamp/)
 
 **Используемые технологии**
 
