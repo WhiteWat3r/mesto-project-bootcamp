@@ -1,5 +1,5 @@
 
-.elements__container {
+.cards {
     margin: 0 auto;
     width: 100%; 
     max-width: 880px;
@@ -13,19 +13,23 @@
 
 
 @media screen and (max-width: 900px) {
-    .elements__container {
+    .cards {
         max-width: calc(100vw - 100px);
         grid-template-columns: repeat(2, 1fr);
     }
 
 }
 
-
-@media screen and (max-width: 560px) {
-    .elements__container {
-        max-width: calc(100vw - 38px);
+@media screen and (max-width: 680px) {
+    .cards {
         grid-template-columns: 1fr;
     }
 
 }
 
+@media screen and (max-width: 560px) {
+    .cards {
+        max-width: calc(100vw - 38px);
+    }
+
+}

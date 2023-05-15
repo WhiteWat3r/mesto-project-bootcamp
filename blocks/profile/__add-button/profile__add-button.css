@@ -4,11 +4,10 @@
     max-width: 150px;
     background-color: #000;
     border: 2px solid white;
-    background-image: url(/images/add.svg);
+    background-image: url(../../../images/add.svg);
     background-repeat: no-repeat;
     background-position: center;
     margin-top: 36px;
-    box-sizing: border-box;
 }
 
 .profile__add-button:hover {

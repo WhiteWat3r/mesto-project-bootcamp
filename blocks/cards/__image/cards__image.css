@@ -1,0 +1,8 @@
+.cards__image {
+    vertical-align: bottom;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    min-height: 282px;
+    object-fit: cover;
+    width: 100%;
+}
