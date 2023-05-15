@@ -15,4 +15,4 @@ Cервис Mesto: интерактивной страницей, куда в д
 
 **Используемые технологии**
 
-Медиа запросы, grid layout сетка, flexbox, fit-content, minmax и т.д. 
+Медиа запросы, grid layout сетка, flexbox и т.д. 
