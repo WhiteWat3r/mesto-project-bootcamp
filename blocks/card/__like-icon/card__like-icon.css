@@ -10,12 +10,9 @@
     cursor: pointer;
     border: none;
     padding: 0;
+    background-color: white;
 }
 
-
-/* .card__like-icon:active {
-    background-color: #000;
-} */
 
 
 .card__like-icon:hover {
