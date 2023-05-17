@@ -1,6 +1,6 @@
 .form {
-    width: 100%;
     margin-left: 36px;
+    padding-bottom: 38px ;
 }
 
 @media screen and (max-width: 470px) {
@@ -13,6 +13,7 @@
 @media screen and (max-width: 330px) {
     .form {
         margin-left: 22px;
+        padding-bottom: 24px;
     }
 
 }

@@ -2,6 +2,9 @@
     display: flex;
     margin-right: 216px;
     flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    margin-left: 28px;
 }
 
 
