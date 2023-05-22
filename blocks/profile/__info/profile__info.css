@@ -1,17 +1,8 @@
 .profile__info {
     display: flex;
-    margin-right: 216px;
     flex-direction: column;
     width: 100%;
     max-width: 400px;
     margin-left: 28px;
-}
-
-
-@media screen and (max-width: 900px) {
-    .profile__info {
-        margin-right: 0;
-    }
-
 }
 
