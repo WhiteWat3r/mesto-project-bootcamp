@@ -9,7 +9,7 @@
 </head>
 <body class="body">
     <div class="root">
-        <header class="header">
+        <header class="header"> 
             <img class="header__logo" src="./images/logo-mesto.svg" alt="Логотип">
         </header>
         <main class="main">
@@ -98,7 +98,7 @@
             <h2 class="popup__heading">Новое место</h2>
             <form class="form" action="#" name="edit-form">
                 <input type="text" class="form__input form__input_value_name-photo" name="name" placeholder="Название">
-                <input type="text" class="form__input form__input_value_link"  name="description" placeholder="Сылка на картинку"> 
+                <input type="text" class="form__input form__input_value_link"  name="description" placeholder="Ссылка на картинку"> 
                 <button type="submit" class="form__submit-button">Сохранить</button>     
             </form>
         </div>
@@ -107,10 +107,18 @@
         <div class="popup__container popup__container_type_image">
             <button class="popup__close popup__close_type_image" aria-label="Закрытие фотографии" type="button"></button>
             <img class="popup__image" src="./images/elbrus.jpg"></img>
-            <h2 class="popup__name">Негрила</h2>
+            <h2 class="popup__name"></h2>
         </div>
     </div>
+    <template id="card-template">
+        <li class="card">
+            <img class="card__image" src="" alt="">
+            <div class="card__info">
+                <h2 class="card__name">Карачаевск</h2>
+                <button class="card__like-icon" aria-label="Нравится" type="button"></button>
+            </div>
+            <button class="card__delete-button" aria-label="Удалить" type="button"></button>
+        </li>
+    </template>
 </body>
 </html>
-
-<!-- popup_opened -->
