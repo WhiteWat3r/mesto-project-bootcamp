@@ -26,7 +26,7 @@
             </section>
             <section class="elements">
                 <ul class="cards">
-                    <li class="card">
+                    <!-- <li class="card">
                         <img class="card__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
                         <div class="card__info">
                             <h2 class="card__name">Карачаевск</h2>
@@ -73,7 +73,7 @@
                             <button class="card__like-icon" aria-label="Нравится" type="button"></button>
                         </div>
                         <button class="card__delete-button" aria-label="Удалить" type="button"></button>
-                    </li>
+                    </li> -->
                 </ul>
             </section>
         </main>
@@ -86,8 +86,8 @@
             <button class="popup__close" aria-label="Закрытие окна редактирования профиля" type="button"></button>
             <h2 class="popup__heading">Редактировать профиль</h2>
             <form class="form" action="#" name="add-form">
-                <input type="text" class="form__input form__input_value_name" name="name" placeholder="Имя">
-                <input type="text" class="form__input form__input_value_description"  name="description" placeholder="О себе"> 
+                <input type="text" class="form__input form__input_value_name" name="name" placeholder="Имя" required>
+                <input type="text" class="form__input form__input_value_description"  name="description" placeholder="О себе" required> 
                 <button type="submit" class="form__submit-button">Сохранить</button>     
             </form>
         </div>
@@ -97,8 +97,8 @@
             <button class="popup__close" aria-label="Закрытие окна добавления карточки" type="button"></button>
             <h2 class="popup__heading">Новое место</h2>
             <form class="form" action="#" name="edit-form">
-                <input type="text" class="form__input form__input_value_name-photo" name="name" placeholder="Название">
-                <input type="text" class="form__input form__input_value_link"  name="description" placeholder="Ссылка на картинку"> 
+                <input type="text" class="form__input form__input_value_name-photo" name="name" placeholder="Название" required>
+                <input type="text" class="form__input form__input_value_link"  name="description" placeholder="Ссылка на картинку" required> 
                 <button type="submit" class="form__submit-button">Сохранить</button>     
             </form>
         </div>
