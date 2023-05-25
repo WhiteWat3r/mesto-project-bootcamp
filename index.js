@@ -2,14 +2,11 @@ const main = document.querySelector('.main');
 const editBtn = main.querySelector('.profile__edit-button')
 const profileName = main.querySelector('.profile__name');
 const profileDescription = main.querySelector('.profile__description');
-const addBtn = main.querySelector('.profile__add-button'); ///
-const cardImage = main.querySelectorAll('.card__image') ///
-const cardName = main.querySelectorAll('.card__name') ///
+const addBtn = main.querySelector('.profile__add-button'); 
 const cardsContainer = main.querySelector('.cards')
 const cards = main.querySelectorAll('.card')
-const cardLikeBtn = main.querySelector('.card__like-icon') ///
-const cardLikeBtns = main.querySelectorAll('.card__like-icon') ///
-const cartDeleteBtn = cardsContainer.querySelectorAll('.card__delete-button') ///
+
+const popupContainer = document.querySelector('.popup__container')
 
 
 
@@ -72,167 +69,49 @@ const initialCards = [
   
 
 
-
-
-
-  function createCardFromArray(card) {
-    
+  function createCard(card, isFromInitialCards) {
+    // isFromInitialCards определяем, откуда мы берем карточки
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.cloneNode(true);
     const cardImage = cardElement.querySelector('.card__image');
     const cardName = cardElement.querySelector('.card__name');
-    const cardLikeBtn = cardElement.querySelector('.card__like-icon')
-    const btnDeleteCard = cardElement.querySelector('.card__delete-button')
-
-
 
     cardImage.src = card.link;
-    cardImage.alt = card.name;
     cardName.textContent = card.name;
-  
-    cardLikeBtn.addEventListener ('click', () => {
-        if (cardLikeBtn.classList.contains('card__like-icon_active')) {
-            cardLikeBtn.classList.remove('card__like-icon_active');
-        } else {
-            cardLikeBtn.classList.add('card__like-icon_active');
-        }
-    })
 
-    cardImage.addEventListener('click', () => {
-        imagePhotoPopup.src = cardImage.src;
-        photoPopup.classList.add('popup_opened');
-        namePhotoPopup.textContent = cardName[cardImage].textContent;
-    })
-
-    btnDeleteCard.addEventListener('click', (evt) => {
-        const eventTarget = evt.target;
-        eventTarget.closest('.card').remove();
-    })
-
-
-
+    if (!isFromInitialCards) {
+      cardName.textContent = nameInputAddCard.value;
+      cardImage.src = inputAddLink.value;
+    }
 
     return cardElement;
-  } //создание карточек из массива
+  } //функция создания карточек
   
-
 
   initialCards.forEach((card) => {
-    const cardElement = createCardFromArray(card);
+    const cardElement = createCard(card, true);
     cardsContainer.append(cardElement);
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  function createCard() {
-    
-    const cardTemplate = document.querySelector('#card-template').content;
-    const cardElement = cardTemplate.cloneNode(true);
-    const cardImage = cardElement.querySelector('.card__image');
-    const cardName = cardElement.querySelector('.card__name');
-    const cardLikeBtn = cardElement.querySelector('.card__like-icon')
-    const btnDeleteCard = cardElement.querySelector('.card__delete-button')
-
-
-
-    cardImage.src = nameInputAddCard.value;
-    // cardImage.alt = inputAddLink.value;
-    cardName.textContent = inputAddLink.value;
-  
-    cardLikeBtn.addEventListener ('click', () => {
-        if (cardLikeBtn.classList.contains('card__like-icon_active')) {
-            cardLikeBtn.classList.remove('card__like-icon_active');
-        } else {
-            cardLikeBtn.classList.add('card__like-icon_active');
-        }
-    })
-
-    cardImage.addEventListener('click', () => {
-        imagePhotoPopup.src = cardImage.src;
-        photoPopup.classList.add('popup_opened');
-        namePhotoPopup.textContent = cardName[cardImage].textContent;
-    })
-
-    btnDeleteCard.addEventListener('click', (evt) => {
-        const eventTarget = evt.target;
-        eventTarget.closest('.card').remove();
-    })
-
-
-
-
-    return cardElement;
-  } //создание карточек пользователем
-  
+  }); // проходимся по массиву и создаем карточки
 
 
 
   const handleAddFormSubmit = (evt) => {
     evt.preventDefault();
 
-    const cardElement = createCard();
+    const card = {
+      name: nameInputAddCard.value,
+      link: inputAddLink.value
+    };
+
+    const cardElement = createCard(card, false);
     cardsContainer.prepend(cardElement);
-    nameInputAddCard.value = ''
-    inputAddLink.value= ''
+    nameInputAddCard.value = '';
+    inputAddLink.value= '';
     closePopup(addCardPopup);
 }; 
 
+
 formAddCart.addEventListener('submit', handleAddFormSubmit); 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -262,12 +141,15 @@ const closePopup = (popup) => {
 
 
 addBtn.addEventListener('click', () => openPopup(addCardPopup));
+
 buttonCloseAddCardPopup.addEventListener('click', () => closePopup(addCardPopup));
+
 editBtn.addEventListener('click', () => {
     openPopup(profilePopup)
     nameInputProfile.value = profileName.textContent;
     descriptionInputProfile.value = profileDescription.textContent; 
 });
+
 buttonCloseProfilePopup.addEventListener('click', () => closePopup(profilePopup));
 
 
@@ -285,7 +167,7 @@ const handleEditFormSubmit = (evt) => {
     profileDescription.textContent = descriptionInputProfile.value;
     
     closePopup(profilePopup);
-} // Изменение имени/информации о профиле
+} // функция изменение имени/информации о профиле
 
 formProfile.addEventListener('submit', handleEditFormSubmit);
 
@@ -302,13 +184,35 @@ formProfile.addEventListener('submit', handleEditFormSubmit);
 
 
 
+cardsContainer.addEventListener ('click', (evt) => {
+  if (evt.target.classList.contains('card__like-icon')) {
+    evt.target.classList.toggle('card__like-icon_active')
+  }
+
+ if (evt.target.classList.contains('card__image')) {
+    imagePhotoPopup.src = evt.target.src;
+    photoPopup.classList.add('popup_opened');
+    namePhotoPopup.textContent = evt.target.nextElementSibling.querySelector('.card__name').textContent;
+  } 
+
+  if (evt.target.classList.contains('card__delete-button')) {
+    evt.target.closest('.card').remove();
+  }
+}) // обработчик нажатия на лайк
 
 
 
 
 
 
+photoPopup.addEventListener('click', (evt) => {
+  if (!evt.target.classList.contains('popup__image')) {
+    photoPopup.classList.remove('popup_opened')
+  } else {
+    console.log(evt.target);
+  }
 
-buttonClosePhotoPopup.addEventListener('click', () => {
-    photoPopup.classList.remove('popup_opened');
-}) //открытие/закрытие попапа С картинками
+})  //закрытие попапа С картинками
+
+
+
