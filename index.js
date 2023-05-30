@@ -8,8 +8,6 @@ const cards = main.querySelectorAll('.card');
 
 const popupContainer = document.querySelector('.popup__container');
 
-
-
 const profilePopup  = document.querySelector('.popup_type_edit');
 const formProfile = document.forms.edit;
 const nameInputProfile = formProfile.elements.name;
@@ -30,11 +28,6 @@ const photoPopup = document.querySelector('.popup_type_image');
 const buttonClosePhotoPopup = photoPopup.querySelector('.popup__close_type_image');
 const imagePhotoPopup = photoPopup.querySelector('.popup__image');
 const namePhotoPopup = photoPopup.querySelector('.popup__name');
-
-
-
-
-  
 
 
   function createCard(card, isFromInitialCards) {
@@ -65,20 +58,6 @@ const namePhotoPopup = photoPopup.querySelector('.popup__name');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function closeByEsc(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened');
@@ -100,7 +79,6 @@ const closePopup = (popup) => {
 
 
 
-
 addBtn.addEventListener('click', () => openPopup(addCardPopup));
 
 buttonCloseAddCardPopup.addEventListener('click', () => closePopup(addCardPopup));
@@ -114,37 +92,36 @@ editBtn.addEventListener('click', () => {
 buttonCloseProfilePopup.addEventListener('click', () => closePopup(profilePopup));
 
 buttonClosePhotoPopup.addEventListener('click', () => closePopup(photoPopup));
-
 // Слушатели открытия/закрытия попапов
 
-
-
-
-
-
-
-
-cardsContainer.addEventListener ('click', (evt) => {
+const toggleLike = (evt) => {
   if (evt.target.classList.contains('card__like-icon')) {
     evt.target.classList.toggle('card__like-icon_active')
-  } // лайк
+  } 
+} // лайк
 
- if (evt.target.classList.contains('card__image')) {
+
+
+const openphotoPopup = (evt) => {
+  if (evt.target.classList.contains('card__image')) {
     imagePhotoPopup.src = evt.target.src;
     openPopup(photoPopup);
     namePhotoPopup.textContent = evt.target.nextElementSibling.querySelector('.card__name').textContent;
-  }  // открытие попапа с картинкой 
+  }
+}  // открытие попапа с картинкой 
 
+const deleteCard = (evt) => {
   if (evt.target.classList.contains('card__delete-button')) {
     evt.target.closest('.card').remove();
-  } // удаление карточки
+  }
+}// удаление карточки
+
+cardsContainer.addEventListener ('click', (evt) => {
+  toggleLike(evt);
+  openphotoPopup(evt);
+  deleteCard(evt);
+
 }) // обработчик действий с карточками
-
-
-
-
-
-
 
 
 
@@ -160,41 +137,6 @@ const closePopupOnOutsideClick = () => {
 
 } // закрытие попапов нажатием на оверлей
 closePopupOnOutsideClick()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const handleAddFormSubmit = (evt) => {
@@ -216,51 +158,15 @@ const handleAddFormSubmit = (evt) => {
 formAddCart.addEventListener('submit', handleAddFormSubmit); 
 
 
-
-
-
-
-
-
-
 const handleEditFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent =  nameInputProfile.value;
   profileDescription.textContent = descriptionInputProfile.value;
   
   closePopup(profilePopup);
-} // функция изменения имени/информации о профиле
+} //  изменениe имени/информации о профиле
 
 formProfile.addEventListener('submit', handleEditFormSubmit);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -275,40 +181,6 @@ const validationSettings = {
 
 
 enableValidation(validationSettings);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
