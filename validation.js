@@ -70,7 +70,7 @@ const showError = (input, settings, errorNotification) => {
   
   
   
-  const enableValidation = (settings) => {
+ const enableValidation = (settings) => {
     const formList = document.querySelectorAll(settings.formSelector)
     formList.forEach((form) => {
       setEventListeners(form, settings);
@@ -81,3 +81,13 @@ const showError = (input, settings, errorNotification) => {
   
   
   
+
+const validationSettings = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__submit-button',
+  inactiveButtonClass: 'form__submit-button_disabled',
+  inputErrorClass: 'form__input_invalid'
+}; 
+
+enableValidation(validationSettings);
