@@ -1,10 +1,9 @@
+
 import {initialCards} from "./initialCards.js";
-import {
-    cardsContainer,
-    nameInputAddCard,
-    inputAddLink
-} from "./index.js";
-import {openphotoPopup} from "./popupActions.js";
+import {nameInputAddCard, inputAddLink} from "./index.js";
+import {openphotoPopup} from "./modal.js";
+
+export const cardsContainer = document.querySelector('.cards');
 
 export function createCard(card, isFromInitialCards) {
     // isFromInitialCards определяем, откуда мы берем карточки

@@ -3,23 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
-    <script type="module" src="./card.js" defer></script>
-    <script type="module" src="./popupActions.js" defer></script>
-    <script type="module" src="./initialCards.js" defer></script>
-    <script type="module" src="./form.js" defer></script>
-    <script type="module" src="./validation.js" defer></script>
-    <script type="module" src="./index.js" defer></script>
     <title>Mesto</title>
 </head>
 <body class="body">
     <div class="root">
         <header class="header"> 
-            <img class="header__logo" src="./images/logo-mesto.svg" alt="Логотип">
+            <img class="header__logo" src="<%=require('./images/logo-mesto.svg')%>" alt="Логотип">
         </header>
         <main class="main">
             <section class="profile">
-                <img class="profile__image" src="./images/avatar.svg" alt="Аватар">
+                <img class="profile__image" src="<%=require('./images/avatar.svg')%>" alt="Аватар">
                 <div class="profile__info">
                     <div class="profile__header">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -115,13 +108,13 @@
     <div class="popup popup_type_image">
         <div class="popup__container popup__container_type_image">
             <button class="popup__close popup__close_type_image" aria-label="Закрытие фотографии" type="button"></button>
-            <img class="popup__image" src="./images/elbrus.jpg" alt="">
+            <img class="popup__image" src="<%=require('./images/elbrus.jpg')%>" alt="">
             <h2 class="popup__name">Эльбрус</h2>
         </div>
     </div>
     <template id="card-template">
         <li class="card">
-            <img class="card__image" src="/images/karachaevsk.jpg" alt="">
+            <img class="card__image" src="<%=require('./images/karachaevsk.jpg')%>" alt="">
             <div class="card__info">
                 <h2 class="card__name">Карачаевск</h2>
                 <button class="card__like-icon" aria-label="Нравится" type="button"></button>
