@@ -42,6 +42,11 @@ const showError = (input, settings, errorNotification) => {
   }
   
   
+
+
+
+
+
   
   const checkFormValidity = (form, submitButton, settings) => {
     if (form.checkValidity()) {
@@ -59,6 +64,11 @@ const showError = (input, settings, errorNotification) => {
   const setEventListeners = (form, settings) => {
     const inputList = form.querySelectorAll(settings.inputSelector);
     const submitButton = form.querySelector(settings.submitButtonSelector)
+    
+    form.addEventListener('reset', () => {
+      disableButton(submitButton, settings)
+    });
+
     inputList.forEach((input) => {
       input.addEventListener('input', () => {
         chekValid(input, settings)
@@ -80,5 +90,3 @@ export const enableValidation = (settings) => {
   
   
   
-  
-

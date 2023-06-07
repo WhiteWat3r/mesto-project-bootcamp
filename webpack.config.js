@@ -17,7 +17,13 @@ module.exports = {
     static: path.resolve(__dirname, './dist'),
     open: true,
     compress: true,
-    port: 8080
+    port: 8080,
+    watchFiles: ['src/**/*.html'],
+    liveReload: true,
+    hot: true,
+    client: {
+      overlay: true,
+  }
   },
   module: {
     rules: [{
@@ -48,6 +54,5 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
-
   ]
 } 
