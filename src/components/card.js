@@ -55,7 +55,7 @@ function createCard(name, alt, link, cardId, ownerId, likess, isLiked) {
   if (ownerId === myId) {
     deleteButton.addEventListener("click", (oldEvt) => {
       openPopup(confirmPopup)
-      confirmButton.addEventListener('click', (evt) => {
+      confirmButton.addEventListener('click', () => {
         renderLoading(true, confirmButton, 'Удаление...', 'Да')
         deleteCard(cardId)
         .then(res => {
