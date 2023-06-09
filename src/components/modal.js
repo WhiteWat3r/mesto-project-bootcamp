@@ -31,7 +31,7 @@ const openPhotoPopup = (evt) => {
     if (evt.target.classList.contains('card__image')) {
       imagePhotoPopup.src = evt.target.src;
       openPopup(photoPopup);
-      namePhotoPopup.textContent = evt.target.nextElementSibling.querySelector('.card__name').textContent;
+      namePhotoPopup.textContent = evt.target.closest('.card').querySelector('.card__name').textContent;
     }
   }  // открытие попапа с картинкой 
   

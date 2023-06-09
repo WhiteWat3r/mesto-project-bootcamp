@@ -1,17 +1,10 @@
 import {
-  inputAvatarLink,
   avatarPopup,
-  cardsContainer,
-  formAddCart,
-  addCardPopup,
-  profileName,
-  profileDescription,
-  profilePopup,
+	submitAvatarButton
 } from "./index.js";
 
 import { closePopup } from "./modal.js";
-import { changeAvatar, saveMyId } from "./utils.js";
-import { createCard, myId } from "./card.js";
+import { changeAvatar, renderLoading } from "./utils.js";
 
 const config = {
   baseUrl: "https://nomoreparties.co/v1/wbf-cohort-9",
@@ -28,34 +21,10 @@ const config = {
 
 
 function getCards() {
-  fetch(`${config.baseUrl}/cards`, {
+	return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-    .then(res => res.json())
-    .then((data) => {
-      console.log(data);
-      data.forEach((card) => {
-        const likes = card.likes.length
-
-       
-
-        const isLiked = card.likes.some((like) => {
-          return like._id === myId
-        })
-
-        const cardElement = createCard(card.name, card.name, card.link, card._id, card.owner._id, likes, isLiked)
-        cardsContainer.append(cardElement);
-
-      })
-    }); 
 }
-
-
-
-
-
-
-
 
 
 
@@ -68,8 +37,13 @@ const updateAvatar = (input) => {
     body: JSON.stringify({
       avatar: input.value,
     }),
-  })
-    .then((res) => res.json())
+})
+		.then((res) => {
+			if (res.ok) {
+				return res.json()
+			}
+			return Promise.reject(`Ошибка: ${res.status}`);
+		})
     .then((data) => {
       console.log(data);
       changeAvatar(input.value);
@@ -77,25 +51,21 @@ const updateAvatar = (input) => {
     })
     .catch((err) => {
       console.log(err);
-    });
-};
+    })
+		.finally(() => {
+			renderLoading(false, submitAvatarButton, 'Сохранение...', 'Сохранить');
+		});
+}; // updateAvatar вызывается два раза, поэтмоу я решил описать всю логизу здесь, чтобы не повторяться в index js
 
 
 
-function getProfileInfo(name, description, avatar) {
+
+
+
+function getProfileInfo() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
   })
-    .then((res) => res.json())
-    .then((data) => {
-      name.textContent = data.name;
-      description.textContent = data.about;
-      avatar.src = data.avatar;
-      saveMyId(data._id);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 }
 
 
@@ -109,23 +79,6 @@ const addCard = (name, link) => {
       link: link.value,
     }),
   })
-    .then((res) => res.json())
-    .then((data) => {
-      const cardElement = createCard(
-        data.name,
-        data.name,
-        data.link,
-        data._id,
-        data.owner._id,
-        data.likes.length
-      );
-      cardsContainer.prepend(cardElement);
-      formAddCart.reset();
-      closePopup(addCardPopup);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 };
 
 
@@ -139,24 +92,16 @@ const changeProfileInfo = (name, description) => {
       about: description.value,
     }),
   })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      profileName.textContent = data.name;
-      profileDescription.textContent = data.about;
-      closePopup(profilePopup);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 };
 
 
 
-const like = (evt, cardId, likeCount) => {
-	return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-		method: 'DELETE',
-		headers: config.headers
+
+const toggleLike = (evt, cardId, likeCount) => {
+  const method = evt.target.classList.contains("card__like-icon_active") ? 'DELETE' : 'PUT';
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method,
+    headers: config.headers
   })
     .then(res => {
       if (res.ok) {
@@ -173,50 +118,19 @@ const like = (evt, cardId, likeCount) => {
     .catch(err => {
       console.log(err);       
     });
-}
+};
 
 
 
-const unlike = (evt, cardId, likeCount) => {
-	return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-		method: 'PUT',
-		headers: config.headers
-	})
-	.then(res => {
-		if (res.ok) {
-			return res.json();
-		} else {
-			console.log('Ошибка на сервере');
-		}
-	})
-	.then(data => {
-		console.log(data);
-		likeCount.textContent = data.likes.length;
-		evt.target.classList.toggle('card__like-icon_active');
-	})
-	.catch(err => {
-		console.log(err);       
-	});
-}
+
 
 
   
-const deleteCard = (evt, cardId) => {
+const deleteCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: 'DELETE',
 		headers: config.headers
 	})
-    .then(res => {
-      if (res.ok) {
-        console.log('успех');
-        evt.target.closest('.card').remove();
-      } else {
-        console.log('удалить не получилось');
-      }
-    })
-    .catch(err => {
-      console.log(err);       
-    });
 }// удаление карточки
 
 
@@ -226,8 +140,7 @@ export {
 	getProfileInfo,
 	addCard,
 	changeProfileInfo,
-	like,
-	unlike,
 	deleteCard,
-	getCards
+	getCards,
+  toggleLike
 };
