@@ -1,5 +1,4 @@
 import { avatar } from "./index.js";
-// import {config} from "./api.js";
 
 const changeAvatar = (link) => {
   avatar.src = link;

@@ -92,12 +92,11 @@ function deleteCard(cardId) {
     method: 'DELETE',
 		headers: config.headers
 	})
-}// удаление карточки
+}
 
 
 
 export {
-  config,
 	updateAvatar,
 	getProfileInfo,
 	addCard,

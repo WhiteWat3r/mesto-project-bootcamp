@@ -2,7 +2,7 @@
 import {deleteCard, toggleLike} from "./api.js";
 import {closePopup, openPopup} from "./modal.js";
 import {handleSubmit} from "./utils.js"
-import {myId, validationSettings} from "./index.js"
+import {validationSettings} from "./index.js"
 import {enableButton} from "./validation.js"
 
 const cardsContainer = document.querySelector(".cards");
