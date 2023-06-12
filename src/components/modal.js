@@ -15,7 +15,7 @@ const openPopup = (popup) => {
 const closePopup = (popup) => {
       popup.classList.remove('popup_opened');
       document.removeEventListener('keydown', closeByEsc)
-  }
+}
 
 
 const closeByEsc = (evt) => {
@@ -47,6 +47,5 @@ const openPhotoPopup = (evt) => {
 export {
   openPopup,
   closePopup,
-  closeByEsc,
   openPhotoPopup
 }

@@ -1,10 +1,8 @@
-import {
-  avatarPopup,
-	submitAvatarButton
-} from "./index.js";
 
-import { closePopup } from "./modal.js";
-import { changeAvatar, renderLoading } from "./utils.js";
+import {checkResponse} from "./utils.js";
+
+
+
 
 const config = {
   baseUrl: "https://nomoreparties.co/v1/wbf-cohort-9",
@@ -16,62 +14,41 @@ const config = {
 
 
 
+function request(url, options) {
+  return fetch(config.baseUrl + url, options).then(checkResponse)
+}
 
 
 
 
 function getCards() {
-	return fetch(`${config.baseUrl}/cards`, {
+  return request(`/cards`,  {
     headers: config.headers
   })
 }
 
 
 
+function getProfileInfo() {
+  return request(`/users/me`, {
+    headers: config.headers
+  }) 
+}
 
 
-const updateAvatar = (input) => {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
+function updateAvatar(input) {
+  return request(`/users/me/avatar`,{
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       avatar: input.value,
-    }),
-})
-		.then((res) => {
-			if (res.ok) {
-				return res.json()
-			}
-			return Promise.reject(`Ошибка: ${res.status}`);
-		})
-    .then((data) => {
-      console.log(data);
-      changeAvatar(input.value);
-      closePopup(avatarPopup);
     })
-    .catch((err) => {
-      console.log(err);
-    })
-		.finally(() => {
-			renderLoading(false, submitAvatarButton, 'Сохранение...', 'Сохранить');
-		});
-}; // updateAvatar вызывается два раза, поэтмоу я решил описать всю логизу здесь, чтобы не повторяться в index js
-
-
-
-
-
-
-function getProfileInfo() {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers,
   })
 }
 
-
-
-const addCard = (name, link) => {
-  return fetch(`${config.baseUrl}/cards`, {
+ 
+function addCard (name, link) {
+  return request(`/cards`, {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify({
@@ -83,41 +60,25 @@ const addCard = (name, link) => {
 
 
 
-const changeProfileInfo = (name, description) => {
-  return fetch(`${config.baseUrl}/users/me`, {
+function changeProfileInfo (name, description) {
+  return request(`/users/me`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       name: name.value,
       about: description.value,
-    }),
+    })
   })
 };
 
 
 
 
-const toggleLike = (evt, cardId, likeCount) => {
-  const method = evt.target.classList.contains("card__like-icon_active") ? 'DELETE' : 'PUT';
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+function toggleLike (method, cardId) {
+  return request(`/cards/likes/${cardId}`, {
     method,
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log('Ошибка на сервере');
-      }
-    })
-    .then(data => {
-      console.log(data);
-      likeCount.textContent = data.likes.length;
-      evt.target.classList.toggle('card__like-icon_active');
-    })
-    .catch(err => {
-      console.log(err);       
-    });
 };
 
 
@@ -126,8 +87,8 @@ const toggleLike = (evt, cardId, likeCount) => {
 
 
   
-const deleteCard = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+function deleteCard(cardId) {
+  return request(`/cards/${cardId}`, {
     method: 'DELETE',
 		headers: config.headers
 	})
@@ -136,6 +97,7 @@ const deleteCard = (cardId) => {
 
 
 export {
+  config,
 	updateAvatar,
 	getProfileInfo,
 	addCard,

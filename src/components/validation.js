@@ -25,7 +25,7 @@ const disableButton = (submitButton, settings) => {
   submitButton.classList.add(settings.inactiveButtonClass);
 };
 
-const enableButton = (submitButton, settings) => {
+export const enableButton = (submitButton, settings) => {
   submitButton.removeAttribute("disabled");
   submitButton.classList.remove(settings.inactiveButtonClass);
 };

@@ -7,10 +7,10 @@ import {
   updateAvatar,
   getProfileInfo,
   addCard,
-  changeProfileInfo
+  changeProfileInfo,
+  getCards
 } from "./api.js";
-import { renderLoading, saveMyId} from "./utils.js";
-
+import {changeAvatar, handleSubmit} from "./utils.js";
 
 
 const addBtn = document.querySelector(".profile__add-button");
@@ -47,25 +47,97 @@ const namePhotoPopup = photoPopup.querySelector(".popup__name");
 
 
 
+Promise.all([getProfileInfo(), getCards()])
+  .then(([profileData, cardsData]) => {
+    profileName.textContent = profileData.name;
+    profileDescription.textContent = profileData.about;
+    avatar.src = profileData.avatar;
+    const myId = profileData._id
+
+    cardsData.forEach((card) => {
+      const isLiked = card.likes.some((like) => {
+        return like._id === myId;
+      });
+      const cardElement = createCard(card, myId, isLiked);
+      cardsContainer.append(cardElement);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 
 
-getProfileInfo()
-.then((res) => {
-  if (res.ok) {
-    return res.json()
-  } 
-  return Promise.reject(`Ошибка: ${res.status}`);
-})
-.then((data) => {
-  profileName.textContent = data.name;
-  profileDescription.textContent = data.about;
-  avatar.src = data.avatar;
-  saveMyId(data._id);
-})
-.catch((err) => {
-  console.log(err);
-});
+
+
+
+
+
+
+  const handleAddFormSubmit = (evt) => {
+
+    const makeRequest = () => {
+      return Promise.all([getProfileInfo(), addCard(nameInputAddCard, inputAddLink)])
+      .then(([profileData, card]) => {
+        const myId = profileData._id
+
+        const cardElement = createCard(card, myId);
+        cardsContainer.prepend(cardElement);
+        formAddCart.reset();
+        closePopup(addCardPopup);
+      })
+    }
+  
+    handleSubmit(makeRequest, evt, 'Создание...')
+  };
+  formAddCart.addEventListener("submit", handleAddFormSubmit);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const handleEditFormSubmit = (evt) => {
+
+    const makeRequest = () => {
+      return changeProfileInfo(nameInputProfile, descriptionInputProfile)
+      .then((data) => {
+        profileName.textContent = data.name;
+        profileDescription.textContent = data.about;
+        closePopup(profilePopup);
+      })
+    }
+    handleSubmit(makeRequest, evt)
+  }; //  изменениe имени/информации о профиле
+  
+  formProfile.addEventListener("submit", handleEditFormSubmit);
+  
+
+
+
+
+
+
+
 
 
 
@@ -85,77 +157,28 @@ editBtn.addEventListener("click", () => {
 
 
 
-const handleAddFormSubmit = (evt) => {
-  evt.preventDefault();
-  renderLoading(true, submitAddCardButton, "Создание...", "Создать");
-
-  addCard(nameInputAddCard, inputAddLink)
-  .then((res) => {
-		if (res.ok) {
-			return res.json()
-		} 
-		return Promise.reject(`Ошибка: ${res.status}`);
-	})
-    .then((data) => {
-      const cardElement = createCard(
-        data.name,
-        data.name,
-        data.link,
-        data._id,
-        data.owner._id,
-        data.likes.length
-      );
-      cardsContainer.prepend(cardElement);
-      formAddCart.reset();
-      closePopup(addCardPopup);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-		.finally(() => {
-			renderLoading(false, submitAddCardButton, 'Создание...', 'Создать')
-		})
-}; // обработчик вставки карточек пользователем
-
-formAddCart.addEventListener("submit", handleAddFormSubmit);
 
 
 
 
-const handleEditFormSubmit = (evt) => {
-  evt.preventDefault();
-  renderLoading(true, submitProfileButton, "Сохранение...", "Сохранить");
 
-  changeProfileInfo(nameInputProfile, descriptionInputProfile)
-  .then((res) => {
-    if (res.ok) {
-      return res.json()
-    } else 
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then((data) => {
-    profileName.textContent = data.name;
-    profileDescription.textContent = data.about;
-    closePopup(profilePopup);
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    renderLoading(false, submitProfileButton, 'Сохранение...', 'Сохранить')
-  })
-}; //  изменениe имени/информации о профиле
-
-formProfile.addEventListener("submit", handleEditFormSubmit);
 
 
 
 
 
 const handleAvatarFormSubmit = (evt) => {
-  evt.preventDefault();
-  renderLoading(true, submitAvatarButton, "Сохранение...", "Сохранить");
-  updateAvatar(inputAvatarLink);
+
+  const makeRequest = () => {
+  return updateAvatar(inputAvatarLink)
+    .then((data) => {
+        console.log(data);
+        changeAvatar(inputAvatarLink.value);
+        closePopup(avatarPopup);
+      })
+  }
+
+  handleSubmit(makeRequest, evt, 'Создание...')
 }; //  изменениe имени/информации о профиле
 
 formAvatar.addEventListener("submit", handleAvatarFormSubmit);
@@ -228,5 +251,6 @@ export {
   avatar,
   submitAvatarButton,
   submitAddCardButton,
-  submitProfileButton
+  submitProfileButton,
+  validationSettings
 };

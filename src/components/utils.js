@@ -1,4 +1,5 @@
 import { avatar } from "./index.js";
+// import {config} from "./api.js";
 
 const changeAvatar = (link) => {
   avatar.src = link;
@@ -9,12 +10,39 @@ const saveMyId = (id) => {
   localStorage.setItem("userId", myId);
 };
 
-const renderLoading = (isLoading, button, renderText, postRenderText) => {
+const renderLoading = (isLoading, button, buttonText='Сохранить', loadingText='Сохранение...') => {
   if (isLoading) {
-    button.textContent = renderText;
+    button.textContent = loadingText;
   } else {
-    button.textContent = postRenderText;
+    button.textContent = buttonText;
   }
 };
 
-export { changeAvatar, saveMyId, renderLoading };
+const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
+}
+
+
+const handleSubmit = (request, evt, loadingText = "Сохранение...") => {
+  evt.preventDefault();
+  const submitButton = evt.submitter;
+  const initialText = submitButton.textContent;
+  renderLoading(true, submitButton, initialText, loadingText);
+
+  request()
+  .then(() => {
+    evt.target.reset()
+  })
+  .catch((err) => {
+    console.error(`Ошибка: ${err}`);
+  })
+  .finally(() => {
+    renderLoading(false, submitButton, initialText);
+  });
+}
+
+
+export { changeAvatar, renderLoading, checkResponse, handleSubmit};

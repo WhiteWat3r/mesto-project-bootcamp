@@ -130,7 +130,9 @@
         <div class="popup__container popup__container_type_remove">
             <button class="popup__close" aria-label="Закрытие окна удаления карточки" type="button"></button>
             <h2 class="popup__heading popup__heading_type_remove">Вы уверены?</h2>
-            <button type="button" class="form__submit-button popup__confirm-button">Да</button>     
+            <form class="form" action="#" name="remove" novalidate>
+                <button type="submit" class="form__submit-button popup__confirm-button">Да</button>   
+            </form>  
         </div>
     </div>
     <template id="card-template">
