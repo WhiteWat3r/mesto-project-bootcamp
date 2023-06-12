@@ -38,7 +38,6 @@
 .popup__container_type_image{background-color:transparent;max-width:-moz-max-content;max-width:max-content}
 .popup__name{font-size:12px;font-weight:400;line-height:15px;margin:10px 0 0}
 .popup_type_image{background-color:rgba(0,0,0,.9)}
-.popup__confirm-button{margin-left:36px}
 .form__input{border:none;border-bottom:1px solid rgba(0,0,0,.2);color:#000;font-size:14px;line-height:17px;max-width:358px;padding:0 0 10px;width:100%}.form__input:focus{outline:none}@media screen and (max-width:540px){.form__input{max-width:calc(100vw - 180px)}}@media screen and (max-width:330px){.form__input{max-width:238px}}
 .form{margin-left:36px;padding-bottom:30px}@media screen and (max-width:470px){.form{margin-left:28px}}@media screen and (max-width:330px){.form{margin-left:22px;padding-bottom:24px}}
 .form__submit-button{background-color:#000;border:none;border-radius:2px;color:#fff;cursor:pointer;font-size:18px;line-height:22px;margin-top:15px;max-width:358px;min-height:50px;width:100%}.form__submit-button:hover{background-color:rgba(0,0,0,.8)}@media screen and (max-width:540px){.form__submit-button{max-width:calc(100vw - 180px)}}@media screen and (max-width:330px){.form__submit-button{font-size:14px;line-height:17px;margin-top:17px;max-width:238px;min-height:46px}}
