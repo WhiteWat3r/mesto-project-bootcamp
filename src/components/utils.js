@@ -4,10 +4,6 @@ const changeAvatar = (link) => {
   avatar.src = link;
 };
 
-const saveMyId = (id) => {
-  const myId = id;
-  localStorage.setItem("userId", myId);
-};
 
 const renderLoading = (isLoading, button, buttonText='Сохранить', loadingText='Сохранение...') => {
   if (isLoading) {
@@ -29,8 +25,9 @@ const handleSubmit = (request, evt, loadingText = "Сохранение...") => 
   evt.preventDefault();
   const submitButton = evt.submitter;
   const initialText = submitButton.textContent;
+  console.log('1', initialText);
   renderLoading(true, submitButton, initialText, loadingText);
-
+  console.log('2', loadingText);
   request()
   .then(() => {
     evt.target.reset()
@@ -39,6 +36,7 @@ const handleSubmit = (request, evt, loadingText = "Сохранение...") => 
     console.error(`Ошибка: ${err}`);
   })
   .finally(() => {
+    console.log('3', initialText);
     renderLoading(false, submitButton, initialText);
   });
 }
