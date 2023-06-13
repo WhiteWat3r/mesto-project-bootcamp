@@ -97,25 +97,6 @@ Promise.all([getProfileInfo(), getCards()])
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const handleEditFormSubmit = (evt) => {
 
     const makeRequest = () => {
@@ -137,14 +118,6 @@ Promise.all([getProfileInfo(), getCards()])
 
 
 
-
-
-
-
-
-
-
-
 addBtn.addEventListener("click", () => openPopup(addCardPopup));
 
 editBtn.addEventListener("click", () => {
@@ -152,16 +125,6 @@ editBtn.addEventListener("click", () => {
   nameInputProfile.value = profileName.textContent;
   descriptionInputProfile.value = profileDescription.textContent;
 });
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -56,8 +56,8 @@ function createCard(card, userId, isLiked) {
 
     const handleRefuseDelete = (evt) => {
         if(!confirmPopup.classList.contains('popup_opened') || (evt.key === "Escape")) {
-          togleAllListeners('remove')
           console.log('очищаю, если отменил');
+          togleAllListeners('remove')
         }
     };
 
@@ -80,8 +80,6 @@ function createCard(card, userId, isLiked) {
     openPopup(confirmPopup)
     togleAllListeners('add')
     enableButton(confirmButton, validationSettings)
-
-
 }); ///////////////////////////////////
 
 
@@ -107,44 +105,3 @@ function createCard(card, userId, isLiked) {
 
 
 export {cardsContainer, createCard };
-
-
-// const cards = document.querySelector('.cards')
-// cards.addEventListener('click', (evt) => {
-//   const target = evt.target
-//   let item = document.querySelector(`[data-id="${target.dataset.delete}"]`)
-//   // console.log(item);
-//   if (target.classList.contains('card__delete-button')) {
-//     openPopup(confirmPopup)
-
-
-
-
-
-
-
-//     const handleConfirmForm = (evt) => {
-//       console.log(evt.target);
-//       evt.preventDefault()
-//       if (!evt.target.closest('.popup').classList.contains('popup_opened')) {
-//         console.log('работает');
-//         item = null
-//         return false
-//       } else if (evt.target.classList.contains('popup__confirm-button')) {
-//        closePopup(confirmPopup) 
-//        if (item) {
-//           deleteCard(item.dataset.id)
-//           .then(() => {
-//             item.remove()
-//             closePopup(confirmPopup)
-//             confirmPopup.removeEventListener('click', handleConfirmForm)
-//           })
-//        }
-//       }
-//     }
-//     confirmPopup.addEventListener('click', handleConfirmForm)
-
-
-
-//   }
-// })
