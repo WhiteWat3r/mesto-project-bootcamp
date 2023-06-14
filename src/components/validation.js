@@ -33,10 +33,8 @@ export const enableButton = (submitButton, settings) => {
 const checkFormValidity = (form, submitButton, settings) => {
   if (form.checkValidity()) {
     enableButton(submitButton, settings);
-    console.log("валидно");
   } else {
     disableButton(submitButton, settings);
-    console.log("нет");
   }
 };
 

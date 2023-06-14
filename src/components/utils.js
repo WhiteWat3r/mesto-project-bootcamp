@@ -1,4 +1,4 @@
-import { avatar } from "./index.js";
+import {avatar} from "./constants.js";
 
 const changeAvatar = (link) => {
   avatar.src = link;
@@ -25,9 +25,7 @@ const handleSubmit = (request, evt, loadingText = "Сохранение...") => 
   evt.preventDefault();
   const submitButton = evt.submitter;
   const initialText = submitButton.textContent;
-  console.log('1', initialText);
   renderLoading(true, submitButton, initialText, loadingText);
-  console.log('2', loadingText);
   request()
   .then(() => {
     evt.target.reset()
@@ -36,10 +34,14 @@ const handleSubmit = (request, evt, loadingText = "Сохранение...") => 
     console.error(`Ошибка: ${err}`);
   })
   .finally(() => {
-    console.log('3', initialText);
     renderLoading(false, submitButton, initialText);
   });
 }
 
 
-export { changeAvatar, renderLoading, checkResponse, handleSubmit};
+export {
+  changeAvatar,
+  renderLoading,
+  checkResponse,
+  handleSubmit
+};

@@ -1,23 +1,11 @@
 
 import {checkResponse} from "./utils.js";
-
-
-
-
-const config = {
-  baseUrl: "https://nomoreparties.co/v1/wbf-cohort-9",
-  headers: {
-    authorization: "fb3ed4f1-761c-46fd-9604-b420f9ed1295",
-    "Content-Type": "application/json",
-  },
-};
-
+import {config} from "./constants.js";
 
 
 function request(url, options) {
   return fetch(config.baseUrl + url, options).then(checkResponse)
 }
-
 
 
 

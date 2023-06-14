@@ -1,8 +1,18 @@
 import "./../pages/index.css";
 
-import { createCard, cardsContainer } from "./card.js";
-import { closePopup, openPopup, openPhotoPopup } from "./modal.js";
-import { enableValidation } from "./validation.js";
+import {
+  createCard,
+  cardsContainer
+}from "./card.js";
+
+import {
+  closePopup,
+  openPopup,
+  openPhotoPopup
+} from "./modal.js";
+
+import {enableValidation} from "./validation.js";
+
 import {
   updateAvatar,
   getProfileInfo,
@@ -10,40 +20,36 @@ import {
   changeProfileInfo,
   getCards
 } from "./api.js";
-import {changeAvatar, handleSubmit} from "./utils.js";
+
+import {
+  changeAvatar,
+  handleSubmit
+} from "./utils.js";
+
+import {
+  profileName,
+  profileDescription,
+  profilePopup,
+  formProfile,
+  nameInputProfile,
+  descriptionInputProfile,
+  addCardPopup,
+  formAddCart,
+  nameInputAddCard,
+  inputAddLink,
+  profileEditAvatar,
+  formAvatar,
+  avatarPopup,
+  inputAvatarLink,
+  avatar,
+  validationSettings,
+  addBtn,
+  editBtn
+} from "./constants.js"
 
 
-const addBtn = document.querySelector(".profile__add-button");
-const editBtn = document.querySelector(".profile__edit-button");
 
-const main = document.querySelector(".main");
-const profileName = main.querySelector(".profile__name");
-const profileDescription = main.querySelector(".profile__description");
-const profileEditAvatar = document.querySelector(".profile__avatar-edit");
-
-const avatar = document.querySelector(".profile__image");
-
-const profilePopup = document.querySelector(".popup_type_edit");
-const formProfile = document.forms.edit;
-const nameInputProfile = formProfile.elements.name;
-const descriptionInputProfile = formProfile.elements.description;
-const submitProfileButton = formProfile.submit;
-
-const addCardPopup = document.querySelector(".popup_type_add");
-const formAddCart = document.forms.add;
-const nameInputAddCard = formAddCart.name;
-const inputAddLink = formAddCart.link;
-const submitAddCardButton = formAddCart.submit;
-
-const avatarPopup = document.querySelector(".popup_type_avatar");
-const formAvatar = document.forms.avatar;
-const inputAvatarLink = formAvatar.querySelector(".form__input_value_link");
-const submitAvatarButton = formAvatar.submit;
-
-const photoPopup = document.querySelector(".popup_type_image");
-const buttonClosePhotoPopup = photoPopup.querySelector(".popup__close_type_image");
-const imagePhotoPopup = photoPopup.querySelector(".popup__image");
-const namePhotoPopup = photoPopup.querySelector(".popup__name");
+let userId;
 
 
 
@@ -52,13 +58,13 @@ Promise.all([getProfileInfo(), getCards()])
     profileName.textContent = profileData.name;
     profileDescription.textContent = profileData.about;
     avatar.src = profileData.avatar;
-    const myId = profileData._id
+    userId = profileData._id
 
     cardsData.forEach((card) => {
       const isLiked = card.likes.some((like) => {
-        return like._id === myId;
+        return like._id === userId;
       });
-      const cardElement = createCard(card, myId, isLiked);
+      const cardElement = createCard(card, userId, isLiked);
       cardsContainer.append(cardElement);
     });
   })
@@ -77,13 +83,10 @@ Promise.all([getProfileInfo(), getCards()])
   const handleAddFormSubmit = (evt) => {
 
     const makeRequest = () => {
-      return Promise.all([getProfileInfo(), addCard(nameInputAddCard, inputAddLink)])
-      .then(([profileData, card]) => {
-        const myId = profileData._id
-
-        const cardElement = createCard(card, myId);
+      return addCard(nameInputAddCard, inputAddLink)
+      .then((card) => {
+        const cardElement = createCard(card, userId);
         cardsContainer.prepend(cardElement);
-        formAddCart.reset();
         closePopup(addCardPopup);
       })
     }
@@ -134,8 +137,7 @@ const handleAvatarFormSubmit = (evt) => {
 
   const makeRequest = () => {
   return updateAvatar(inputAvatarLink)
-    .then((data) => {
-        console.log(data);
+    .then(() => {
         changeAvatar(inputAvatarLink.value);
         closePopup(avatarPopup);
       })
@@ -147,18 +149,7 @@ const handleAvatarFormSubmit = (evt) => {
 formAvatar.addEventListener("submit", handleAvatarFormSubmit);
 
 
-
-const validationSettings = {
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_disabled",
-  inputErrorClass: "form__input_invalid",
-};
-
 enableValidation(validationSettings);
-
-
 
 
 const setEventListenersOnPopups = () => {
@@ -178,8 +169,6 @@ const setEventListenersOnPopups = () => {
 setEventListenersOnPopups();
 
 profileEditAvatar.addEventListener("click", () => openPopup(avatarPopup));
-
-cardsContainer.addEventListener("click", (evt) => openPhotoPopup(evt));
 
 
 
@@ -204,16 +193,9 @@ export {
   formAddCart,
   nameInputAddCard,
   inputAddLink,
-  photoPopup,
-  buttonClosePhotoPopup,
-  imagePhotoPopup,
-  namePhotoPopup,
   profileEditAvatar,
   avatarPopup,
   inputAvatarLink,
   avatar,
-  submitAvatarButton,
-  submitAddCardButton,
-  submitProfileButton,
   validationSettings
 };

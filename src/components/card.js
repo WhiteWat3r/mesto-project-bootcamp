@@ -1,14 +1,28 @@
+import {
+  deleteCard,
+  toggleLike
+} from "./api.js";
 
-import {deleteCard, toggleLike} from "./api.js";
-import {closePopup, openPopup} from "./modal.js";
+import {
+  closePopup,
+  openPopup,
+  openPhotoPopup
+} from "./modal.js";
+
 import {handleSubmit} from "./utils.js"
-import {validationSettings} from "./index.js"
+
+import {
+  validationSettings, 
+  cardsContainer,
+  confirmPopup,
+  confirmButton,
+  formConfirm
+} from "./constants.js"
+
 import {enableButton} from "./validation.js"
 
-const cardsContainer = document.querySelector(".cards");
-const confirmPopup = document.querySelector('.popup_type_remove')
-const confirmButton = confirmPopup.querySelector('.form__submit-button')
-const formConfirm = document.forms.remove
+
+
 
 
 function createCard(card, userId, isLiked) {
@@ -27,6 +41,7 @@ function createCard(card, userId, isLiked) {
 
 
 
+
   if (card.owner._id !== userId) {
     deleteButton.remove(); 
   }
@@ -34,12 +49,7 @@ function createCard(card, userId, isLiked) {
 
 
 
-
-
   deleteButton.addEventListener("click", () => {
-
-
-
 
     const togleAllListeners = (status) => {
       if (status === "remove") {
@@ -53,34 +63,31 @@ function createCard(card, userId, isLiked) {
       }
     }
 
-
     const handleRefuseDelete = (evt) => {
         if(!confirmPopup.classList.contains('popup_opened') || (evt.key === "Escape")) {
-          console.log('очищаю, если отменил');
           togleAllListeners('remove')
         }
     };
 
-    
     const handleFormSubmit = (evt) => {
       const makeRequest = () => {
         return deleteCard(card._id)
         .then(() => {
+          togleAllListeners('remove')
           cardElement.remove();
-          closePopup(confirmPopup)
+          closePopup(confirmPopup);
         })
       }
       
-      handleSubmit(makeRequest, evt, 'Удаление...')
-      console.log('очищаю, если удалил');
-      togleAllListeners('remove')
+      handleSubmit(makeRequest, evt, 'Удаление...');
     };
-
 
     openPopup(confirmPopup)
     togleAllListeners('add')
     enableButton(confirmButton, validationSettings)
-}); ///////////////////////////////////
+});
+
+
 
 
 
@@ -98,10 +105,18 @@ function createCard(card, userId, isLiked) {
     });
   });
 
+
+
+  cardImage.addEventListener("click", () => openPhotoPopup(cardName.textContent, cardImage.src));
+
+
+
+
+
   return cardElement;
-} //функция создания карточек
+}
 
 
 
 
-export {cardsContainer, createCard };
+export {cardsContainer, createCard};

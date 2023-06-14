@@ -2,7 +2,7 @@ import {
     photoPopup,
     imagePhotoPopup,
     namePhotoPopup
-} from "./index.js";
+} from "./constants.js";
 
 
 
@@ -27,12 +27,11 @@ const closeByEsc = (evt) => {
 
 
 
-const openPhotoPopup = (evt) => {
-    if (evt.target.classList.contains('card__image')) {
-      imagePhotoPopup.src = evt.target.src;
+const openPhotoPopup = (cardName, src) => {
+      imagePhotoPopup.src = src;
+      imagePhotoPopup.alt = cardName;
+      namePhotoPopup.textContent = cardName;
       openPopup(photoPopup);
-      namePhotoPopup.textContent = evt.target.closest('.card').querySelector('.card__name').textContent;
-    }
   }  // открытие попапа с картинкой 
   
 
